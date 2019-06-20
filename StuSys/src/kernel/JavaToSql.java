@@ -191,11 +191,6 @@ public class JavaToSql {
 		String[][] res = showTable.GetColumnValue(newres);
 		return res;
 	}
-	//更新票数据，剩余票减一
-	public static void Decrease(String ID) {
-		String order = FunctionVoid.Decrease(ID, curTable);
-		executeVoid(order, "Decrease");
-	}
 }
 class FunctionVoid {
 	public static String Login(String username, String password) {

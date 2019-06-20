@@ -31,9 +31,6 @@ public class Login extends JFrame{
 		char[] password = passwordText.getPassword();
 		return String.valueOf(password);
 	}
-	public void LoginWindowDispose() {
-		dispose();
-	}
 	//初始化界面
 	private void init() {
 		this.setTitle("登录");
