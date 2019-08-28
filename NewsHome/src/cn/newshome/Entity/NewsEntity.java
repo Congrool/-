@@ -7,6 +7,13 @@ public class NewsEntity {
 	private String keywords;
 	private String newsbody;
 	private Date created_time;
+	public NewsEntity(String newsID, String keywords, String newsbody, Date created_time) {
+		super();
+		this.newsID = newsID;
+		this.keywords = keywords;
+		this.newsbody = newsbody;
+		this.created_time = created_time;
+	}
 	public String getNewsID() {
 		return newsID;
 	}

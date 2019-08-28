@@ -8,6 +8,14 @@ public class CommentEntity {
 	private String newsID;
 	private String commentText;
 	private Date created_time;
+	public CommentEntity(String commentID, String uID, String newsID, String commentText, Date created_time) {
+		super();
+		this.commentID = commentID;
+		UID = uID;
+		this.newsID = newsID;
+		this.commentText = commentText;
+		this.created_time = created_time;
+	}
 	public String getCommentID() {
 		return commentID;
 	}

@@ -9,6 +9,20 @@ public class UserEntity {
 	private String password;
 	private String phone;
 	private String email;
+	public UserEntity(String uID, String username, String password, String phone, String email, int gender,
+			String avadar, String created_user, Date created_time, String modified_user, Date modified_time) {
+		UID = uID;
+		this.username = username;
+		this.password = password;
+		this.phone = phone;
+		this.email = email;
+		this.gender = gender;
+		this.avadar = avadar;
+		this.created_user = created_user;
+		this.created_time = created_time;
+		this.modified_user = modified_user;
+		this.modified_time = modified_time;
+	}
 	private int gender;
 	private String avadar;
 	private String created_user;

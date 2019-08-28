@@ -47,7 +47,7 @@ public class UserDao {
 			res = new Object[11];
 			while(rs.next()) {
 				for(int i = 1; i <= 11; i++)
-					res[i] = rs.getObject(i);
+					res[i-1] = rs.getObject(i);
 			}
 			return res;
 		}catch(SQLException se) {
@@ -81,7 +81,7 @@ public class UserDao {
 			res = new Object[11];
 			while(rs.next()) {
 				for(int i = 1; i <= 11; i++)
-					res[i] = rs.getObject(i);
+					res[i-1] = rs.getObject(i);
 			}
 			return res;
 		}catch(SQLException se) {
@@ -93,7 +93,6 @@ public class UserDao {
 			DBUtils.close(rs);
 		}
 	}
-	//TODO:Insert
 	/**
 	 * 插入用户数据
 	 * 此函数不检查是否已存在重复用户名
@@ -123,6 +122,7 @@ public class UserDao {
 			stmt.setTimestamp(8, ts);
 			stmt.setString(9,user.getModified_user());
 			ts = user.getModified_time()==null?null:new Timestamp(user.getModified_time().getTime());
+			stmt.setTimestamp(10, ts);
 			
 			int num = stmt.executeUpdate();
 			return num;
@@ -242,16 +242,15 @@ public class UserDao {
 	 * @throws UserDaoException
 	 */
 	private int Update(String columnName, Object value,String uid) throws UserDaoException {
-		String sql = "update user_info set ? = ? where uid = ?"; 
+		String sql = "update user_info set "+columnName+" = ? where uid = ?"; 
 		PreparedStatement stmt = null;
 		Connection conn = null;
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, columnName);
-			stmt.setString(2, (String)value);
-			stmt.setString(3, (String)uid);
+			stmt.setString(1, (String)value);
+			stmt.setString(2, (String)uid);
 			
 			int num = stmt.executeUpdate();
 			return num;
