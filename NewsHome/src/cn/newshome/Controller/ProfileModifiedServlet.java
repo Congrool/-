@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.newshome.Entity.UserEntity;
-import cn.newshome.Service.GenderValueException;
 import cn.newshome.Service.UserService;
+import cn.newshome.Service.ex.GenderValueException;
 import cn.newshome.Service.ex.StringEmptyException;
 
 @WebServlet("/user_profile")
@@ -20,6 +20,7 @@ public class ProfileModifiedServlet extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		super.service(req, resp);
 		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=utf-8");
 		
 		String phone = req.getParameter("phone");
 		String email = req.getParameter("email");

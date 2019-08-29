@@ -16,7 +16,7 @@ import cn.newshome.Util.DBUtils;
  *
  */
 public class NewsDao {
-	public Object[] selectByNewsid(String newsid) throws NewsDaoException {
+	public Object[] selectByNewsid(int newsid){
 		String sql="select * from news_info where news_id=?";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -26,7 +26,7 @@ public class NewsDao {
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, newsid);
+			stmt.setInt(1, newsid);
 			rs = stmt.executeQuery();
 			res = new Object[5];
 			if(rs.next()) {

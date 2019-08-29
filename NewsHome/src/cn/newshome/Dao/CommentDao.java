@@ -34,7 +34,7 @@ public class CommentDao {
 	 * @return Vector二维数组
 	 * @throws NewsDaoException
 	 */
-	public Vector<Vector<Object>> selectByUid(String uid) {
+	public Vector<Vector<Object>> selectByUid(Integer uid) {
 		String sql = "select * from comment_info where uid=?";
 		Vector<Vector<Object>> res = null;
 		ResultSet rs = null;
@@ -44,7 +44,7 @@ public class CommentDao {
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1,uid);
+			stmt.setInt(1,uid);
 			
 			rs = stmt.executeQuery();
 			
@@ -73,7 +73,7 @@ public class CommentDao {
 	 * @return
 	 * @throws NewsDaoException
 	 */
-	public Vector<Vector<Object>> selectByNewsid(String newsid){
+	public Vector<Vector<Object>> selectByNewsid(int newsid){
 		String sql = "select * from comment_info where news_id=?";
 		Vector<Vector<Object>> res = null;
 		ResultSet rs = null;
@@ -83,7 +83,7 @@ public class CommentDao {
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1,newsid);
+			stmt.setInt(1,newsid);
 			rs = stmt.executeQuery();
 			
 			res = new Vector<Vector<Object>>();
@@ -111,7 +111,7 @@ public class CommentDao {
 	 * @return
 	 * @throws NewsDaoException
 	 */
-	public int deleteByCommentid(String commentid){
+	public int deleteByCommentid(Integer commentid){
 		String sql = "delete from comment_info where comment_id=?;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -119,7 +119,7 @@ public class CommentDao {
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, commentid);
+			stmt.setInt(1, commentid);
 			
 			int num = stmt.executeUpdate();
 			return num;
@@ -146,8 +146,8 @@ public class CommentDao {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
 			
-			stmt.setObject(1, comm.getUID());
-			stmt.setObject(2, comm.getNewsID());
+			stmt.setInt(1, comm.getUID());
+			stmt.setInt(2, comm.getNewsID());
 			stmt.setString(3, comm.getCommentText());
 			stmt.setTimestamp(4, comm.getCreated_time());
 			
@@ -159,6 +159,35 @@ public class CommentDao {
 		}finally {
 			DBUtils.close(conn);
 			DBUtils.close(stmt);
+		}
+	}
+	public Object[] selectByCommentid(Integer commentid) {
+		String sql = "select * from comment_info where comment_id = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Object[] res = null;
+ 		try {
+			conn = DBUtils.getConnection();
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setInt(1, commentid);
+			
+			rs = stmt.executeQuery();
+			res = new Object[5];
+			if(rs.next()) {
+				for(int i = 1; i <= 5; i++) {
+					res[i-1] = rs.getObject(i);
+				}
+			}
+			return res;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			throw new CommentDaoException("Exception occured when select by comment_id",se);
+		}finally {
+			DBUtils.close(conn);
+			DBUtils.close(stmt);
+			DBUtils.close(rs);
 		}
 	}
 }

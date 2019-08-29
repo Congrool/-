@@ -30,7 +30,7 @@ public class UserDao {
 	 * @param uid
 	 * @return Object[]包含一行数据 or null 
 	 */
-	public Object[] SelectByUid(String uid){
+	public Object[] SelectByUid(Integer uid){
 		String sql = "select * from user_info where uid=?;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -41,7 +41,7 @@ public class UserDao {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, uid);
+			stmt.setInt(1, uid);
 			
 			rs = stmt.executeQuery();
 			res = new Object[11];
@@ -115,7 +115,7 @@ public class UserDao {
 			stmt.setString(2, user.getPassword());
 			stmt.setString(3, user.getPhone());
 			stmt.setString(4, user.getEmail());
-			stmt.setObject(5, user.getGender());
+			stmt.setInt(5, user.getGender());
 			stmt.setString(6, user.getAvadar());
 			stmt.setString(7, user.getCreated_user());
 			stmt.setTimestamp(8, user.getCreated_time());
@@ -132,7 +132,6 @@ public class UserDao {
 			DBUtils.close(stmt);
 		}
 	}
-	//TODO:Delete
 	/**
 	 * 根据用户id删除数据
 	 * @param uid
@@ -146,7 +145,7 @@ public class UserDao {
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setObject(1, uid);
+			stmt.setInt(1, uid);
 			
 			int num = stmt.executeUpdate();
 			return num;
@@ -158,7 +157,6 @@ public class UserDao {
 			DBUtils.close(stmt);
 		}
 	}
-	//TODO:Update
 	/**
 	 * 更新用户密码
 	 * @param value是密码字符串
@@ -248,7 +246,7 @@ public class UserDao {
 			stmt = conn.prepareStatement(sql);
 			
 			stmt.setString(1, (String)value);
-			stmt.setObject(2, uid);
+			stmt.setInt(2, uid);
 			
 			int num = stmt.executeUpdate();
 			return num;

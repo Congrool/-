@@ -9,9 +9,8 @@ public class CommentEntity {
 	private Integer newsID;
 	private String commentText;
 	private Timestamp created_time;
-	public CommentEntity(Integer commentID, Integer uID, Integer newsID, String commentText, Timestamp created_time) {
+	public CommentEntity(Integer uID, Integer newsID, String commentText, Timestamp created_time) {
 		super();
-		this.commentID = commentID;
 		UID = uID;
 		this.newsID = newsID;
 		this.commentText = commentText;
