@@ -1,12 +1,12 @@
 package cn.newshome.test;
 
-import java.sql.Timestamp;
 import java.util.Vector;
 
 import cn.newshome.Entity.CommentEntity;
 import cn.newshome.Service.CommentService;
 import cn.newshome.Service.ex.CommentBodyEmptyException;
 import cn.newshome.Service.ex.CommentNotExistException;
+import cn.newshome.Service.ex.NewsDoesNotExistException;
 import cn.newshome.Service.ex.UserDoesNotExistException;
 
 public class testCommentService {
@@ -42,13 +42,11 @@ public class testCommentService {
 		}		
 	}
 	public void testsearchBynewsid(Integer newsid) {
-		Vector<Vector<Object>> res;
+		CommentEntity[] res;
 		try {
 			res = cs.searchBynewsid(newsid);
-			for(int i = 0; i < res.size(); i++)
-				for(int j = 0; j < res.elementAt(i).size(); j++)
-					System.out.println(res.elementAt(i).elementAt(j));
-		} catch (UserDoesNotExistException e) {
+
+		} catch (NewsDoesNotExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (CommentNotExistException e) {

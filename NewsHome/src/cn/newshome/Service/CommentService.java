@@ -1,5 +1,6 @@
 package cn.newshome.Service;
 
+import java.sql.Timestamp;
 import java.util.Vector;
 
 import cn.newshome.Dao.CommentDao;
@@ -7,6 +8,7 @@ import cn.newshome.Dao.UserDao;
 import cn.newshome.Entity.CommentEntity;
 import cn.newshome.Service.ex.CommentBodyEmptyException;
 import cn.newshome.Service.ex.CommentNotExistException;
+import cn.newshome.Service.ex.NewsDoesNotExistException;
 import cn.newshome.Service.ex.UserDoesNotExistException;
 
 /**
@@ -49,18 +51,29 @@ public class CommentService {
 		}
 		return res;
 	}
-	public Vector<Vector<Object>> searchBynewsid(Integer newsid)throws UserDoesNotExistException,CommentNotExistException{
+	public CommentEntity[] searchBynewsid(Integer newsid)throws NewsDoesNotExistException,CommentNotExistException{
 		
 		CommentDao cd = new CommentDao();
-		UserDao ud = new UserDao();
+
 		if(cd.selectByNewsid(newsid) == null) {
-			throw new UserDoesNotExistException("新闻不存在");
+			throw new NewsDoesNotExistException("新闻不存在");
 		}
 		
 		Vector<Vector<Object> > res = cd.selectByNewsid(newsid);
 		if(res == null) {
 			throw new CommentNotExistException("没有评论");
 		}
-		return res;
+		
+		CommentEntity[] ret = new CommentEntity[res.size()];
+		
+		for(int i = 0; i < res.size(); i++) {
+			ret[i].setCommentID((int)res.elementAt(i).get(0));
+			ret[i].setUID((int)res.elementAt(i).get(1));
+			ret[i].setNewsID((int)res.elementAt(i).get(2));
+			ret[i].setCommentText((String)res.elementAt(i).get(3));
+			ret[i].setCreated_time((Timestamp)res.elementAt(i).get(4));
+		}
+				
+		return ret;
 	}
 }

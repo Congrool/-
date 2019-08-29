@@ -108,4 +108,20 @@ public class UserService {
 		}
 		ud.UpdateGender(gender, uid);
 	}
+	public UserEntity searchUserInfoByUID(Integer uid) {
+		Object[] meta = ud.SelectByUid(uid);
+		UserEntity user = null;	
+		user.setUID((int)meta[0]);
+		user.setUsername((String)meta[1]);
+		user.setPassword((String)meta[2]);
+		user.setPhone((String)meta[3]);
+		user.setEmail((String)meta[4]);
+		user.setGender((int)meta[5]);
+		user.setAvadar((String)meta[6]);
+		user.setCreated_user((String)meta[7]);
+		user.setCreated_time((Timestamp)meta[8]);
+		user.setModified_user((String)meta[9]);
+		user.setModified_time((Timestamp)meta[10]);
+		return user;
+	}
 }

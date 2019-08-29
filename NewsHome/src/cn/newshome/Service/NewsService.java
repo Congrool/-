@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 
 import cn.newshome.Dao.NewsDao;
 import cn.newshome.Entity.NewsEntity;
-import cn.newshome.Service.ex.NewsDoesNotExist;
+import cn.newshome.Service.ex.NewsDoesNotExistException;
 
 public class NewsService {
-	public NewsEntity getNewsByNewsid(Integer newsid) throws NewsDoesNotExist{
+	public NewsEntity getNewsByNewsid(Integer newsid) throws NewsDoesNotExistException{
 		NewsDao nd = new NewsDao();
 		Object[] res = nd.selectByNewsid(newsid);
 		if(res == null) {
-			throw new NewsDoesNotExist("新闻不存在");
+			throw new NewsDoesNotExistException("新闻不存在");
 		}
 		
 		NewsEntity news = new NewsEntity();
