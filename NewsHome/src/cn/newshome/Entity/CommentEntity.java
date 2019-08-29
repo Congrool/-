@@ -1,14 +1,15 @@
 package cn.newshome.Entity;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class CommentEntity {
-	private String commentID;
-	private String UID;
-	private String newsID;
+	private Integer commentID;
+	private Integer UID;
+	private Integer newsID;
 	private String commentText;
-	private Date created_time;
-	public CommentEntity(String commentID, String uID, String newsID, String commentText, Date created_time) {
+	private Timestamp created_time;
+	public CommentEntity(Integer commentID, Integer uID, Integer newsID, String commentText, Timestamp created_time) {
 		super();
 		this.commentID = commentID;
 		UID = uID;
@@ -16,22 +17,23 @@ public class CommentEntity {
 		this.commentText = commentText;
 		this.created_time = created_time;
 	}
-	public String getCommentID() {
+	public CommentEntity() {}
+	public Integer getCommentID() {
 		return commentID;
 	}
-	public void setCommentID(String commentID) {
+	public void setCommentID(Integer commentID) {
 		this.commentID = commentID;
 	}
-	public String getUID() {
+	public Integer getUID() {
 		return UID;
 	}
-	public void setUID(String uID) {
+	public void setUID(Integer uID) {
 		UID = uID;
 	}
-	public String getNewsID() {
+	public Integer getNewsID() {
 		return newsID;
 	}
-	public void setNewsID(String newsID) {
+	public void setNewsID(Integer newsID) {
 		this.newsID = newsID;
 	}
 	public String getCommentText() {
@@ -40,12 +42,10 @@ public class CommentEntity {
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
 	}
-	public Date getCreated_time() {
+	public Timestamp getCreated_time() {
 		return created_time;
 	}
-	public void setCreated_time(Date created_time) {
+	public void setCreated_time(Timestamp created_time) {
 		this.created_time = created_time;
 	}
-	
-	
 }

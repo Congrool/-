@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import org.apache.catalina.User;
+
 import cn.newshome.Dao.ex.CommentDaoException;
 import cn.newshome.Dao.ex.NewsDaoException;
+import cn.newshome.Entity.CommentEntity;
 import cn.newshome.Util.DBUtils;
 
 /**
@@ -17,11 +20,21 @@ import cn.newshome.Util.DBUtils;
  * 
  * 评论的删除：
  * 按commnet_id删除：deleteByCommentid
+ * 
+ * 评论的添加：
+ * ：insert
+ * 
  * @author 张逸飞
  *
  */
 public class CommentDao {
-	public Vector<Vector<Object>> selectByUid(String uid) throws NewsDaoException{
+	/**
+	 * 根据uid查找comment
+	 * @param uid
+	 * @return Vector二维数组
+	 * @throws NewsDaoException
+	 */
+	public Vector<Vector<Object>> selectByUid(String uid) {
 		String sql = "select * from comment_info where uid=?";
 		Vector<Vector<Object>> res = null;
 		ResultSet rs = null;
@@ -54,7 +67,13 @@ public class CommentDao {
 			DBUtils.close(rs);
 		}
 	}
-	public Vector<Vector<Object>> selectByNewsid(String newsid)throws NewsDaoException{
+	/**
+	 * 根据newsid,查找所有comment
+	 * @param newsid
+	 * @return
+	 * @throws NewsDaoException
+	 */
+	public Vector<Vector<Object>> selectByNewsid(String newsid){
 		String sql = "select * from comment_info where news_id=?";
 		Vector<Vector<Object>> res = null;
 		ResultSet rs = null;
@@ -86,7 +105,13 @@ public class CommentDao {
 			DBUtils.close(rs);
 		}
 	}
-	public int deleteByCommentid(String commentid)throws NewsDaoException {
+	/**
+	 * 根据commentid删除某条comment信息
+	 * @param commentid
+	 * @return
+	 * @throws NewsDaoException
+	 */
+	public int deleteByCommentid(String commentid){
 		String sql = "delete from comment_info where comment_id=?;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -101,6 +126,36 @@ public class CommentDao {
 		}catch(SQLException se) {
 			se.printStackTrace();
 			throw new CommentDaoException("Exception occured when delete by comment_id",se);
+		}finally {
+			DBUtils.close(conn);
+			DBUtils.close(stmt);
+		}
+	}
+	/**
+	 * 插入Comment信息
+	 * @param comm
+	 * @return 影响数据库表单的行数
+	 */
+	public int insert(CommentEntity comm) {
+		String sql = "insert into comment_info ("
+				+ "uid,news_id,comment_text,created_time)"
+				+ "values(?,?,?,?)";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = DBUtils.getConnection();
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setObject(1, comm.getUID());
+			stmt.setObject(2, comm.getNewsID());
+			stmt.setString(3, comm.getCommentText());
+			stmt.setTimestamp(4, comm.getCreated_time());
+			
+			int num = stmt.executeUpdate();
+			return num;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			throw new CommentDaoException("Exception occured when insert comment data",se);
 		}finally {
 			DBUtils.close(conn);
 			DBUtils.close(stmt);
