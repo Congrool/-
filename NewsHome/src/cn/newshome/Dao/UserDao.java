@@ -30,7 +30,7 @@ public class UserDao {
 	 * @param uid
 	 * @return Object[]包含一行数据 or null 
 	 */
-	public Object[] SelectByUid(String uid) throws UserDaoException{
+	public Object[] SelectByUid(String uid){
 		String sql = "select * from user_info where uid=?;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -64,7 +64,7 @@ public class UserDao {
 	 * @param username
 	 * @return Object[]包含一行数据 or null 
 	 */
-	public Object[] SelectByUsername(String username) throws UserDaoException{
+	public Object[] SelectByUsername(String username){
 		String sql = "select * from user_info where username=?;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -100,7 +100,7 @@ public class UserDao {
 	 * @param user
 	 * @return 影响的行数
 	 */
-	public int Insert(UserEntity user) throws UserDaoException{
+	public int Insert(UserEntity user){
 		String sql = "insert into user_info("
 				+ "username,password,phone,email,gender,avatar,created_user,created_time,modified_user,modified_time)"
 				+ "values(?,?,?,?,?,?,?,?,?,?)";
@@ -118,11 +118,9 @@ public class UserDao {
 			stmt.setObject(5, user.getGender());
 			stmt.setString(6, user.getAvadar());
 			stmt.setString(7, user.getCreated_user());
-			Timestamp ts = user.getCreated_time()==null?null:new Timestamp(user.getCreated_time().getTime());
-			stmt.setTimestamp(8, ts);
-			stmt.setString(9,user.getModified_user());
-			ts = user.getModified_time()==null?null:new Timestamp(user.getModified_time().getTime());
-			stmt.setTimestamp(10, ts);
+			stmt.setTimestamp(8, user.getCreated_time());
+			stmt.setString(9, user.getModified_user());
+			stmt.setTimestamp(10, user.getModified_time());
 			
 			int num = stmt.executeUpdate();
 			return num;
@@ -140,7 +138,7 @@ public class UserDao {
 	 * @param uid
 	 * @return 影响的行数
 	 */
-	public int Delete(String uid) throws UserDaoException{
+	public int Delete(Integer uid){
 		String sql = "delete from user_info where uid=?";
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -148,7 +146,7 @@ public class UserDao {
 		try {
 			conn = DBUtils.getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, uid);
+			stmt.setObject(1, uid);
 			
 			int num = stmt.executeUpdate();
 			return num;
@@ -166,7 +164,7 @@ public class UserDao {
 	 * @param value是密码字符串
 	 * @return 修改的行数
 	 */
-	public int UpdatePassword(String value,String uid) throws UserDaoException{
+	public int UpdatePassword(String value,Integer uid) {
 		return Update("password",value,uid);
 	}
 	/**
@@ -174,7 +172,7 @@ public class UserDao {
 	 * @param value是手机号字符串
 	 * @return 修改的行数
 	 */
-	public int UpdatePhone(String value,String uid) throws UserDaoException{
+	public int UpdatePhone(String value,Integer uid){
 		return Update("phone",value,uid);
 	}
 	/**
@@ -182,7 +180,7 @@ public class UserDao {
 	 * @param value是邮箱字符串
 	 * @return 修改的行数
 	 */
-	public int UpdateEmail(String value,String uid) throws UserDaoException{
+	public int UpdateEmail(String value,Integer uid){
 		return Update("email",value,uid);
 	}
 	/**
@@ -190,7 +188,7 @@ public class UserDao {
 	 * @param value是性别
 	 * @return 修改的行数
 	 */
-	public int UpdateGender(int value,String uid) throws UserDaoException{
+	public int UpdateGender(int value,Integer uid) {
 		return Update("gender",value,uid);
 	}
 	/**
@@ -198,7 +196,7 @@ public class UserDao {
 	 * @param value是头像字符串
 	 * @return 修改的行数
 	 */
-	public int UpdateAvatar(String value,String uid) throws UserDaoException{
+	public int UpdateAvatar(String value,Integer uid){
 		return Update("avatar",value,uid);
 	}
 	/**
@@ -206,7 +204,7 @@ public class UserDao {
 	 * @param value是用户名字符串
 	 * @return 修改的行数
 	 */
-	public int UpdateCreated_user(String value,String uid) throws UserDaoException {
+	public int UpdateCreated_user(String value,Integer uid) {
 		return Update("created_user",value,uid);
 	}
 	/**
@@ -214,7 +212,7 @@ public class UserDao {
 	 * @param value是用户名字符串
 	 * @return 修改的行数
 	 */
-	public int UpdateModified_user(String value,String uid) throws UserDaoException{
+	public int UpdateModified_user(String value,Integer uid){
 		return Update("modified_user",value,uid);
 	}
 	/**
@@ -222,7 +220,7 @@ public class UserDao {
 	 * @param value是Date类型
 	 * @return 修改的行数
 	 */
-	public int UpdateCreated_time(Date value,String uid) throws UserDaoException {
+	public int UpdateCreated_time(Timestamp value,Integer uid){
 		return Update("created_time",value,uid);
 	}
 	/**
@@ -230,7 +228,7 @@ public class UserDao {
 	 * @param value是Date类型
 	 * @return 修改的行数
 	 */
-	public int UpdateModified_time(Date value,String uid) throws UserDaoException {
+	public int UpdateModified_time(Timestamp value,Integer uid) {
 		return Update("modified_time",value,uid);
 	}
 	/**
@@ -241,7 +239,7 @@ public class UserDao {
 	 * @return
 	 * @throws UserDaoException
 	 */
-	private int Update(String columnName, Object value,String uid) throws UserDaoException {
+	private int Update(String columnName, Object value,Integer uid) {
 		String sql = "update user_info set "+columnName+" = ? where uid = ?"; 
 		PreparedStatement stmt = null;
 		Connection conn = null;
@@ -250,7 +248,7 @@ public class UserDao {
 			stmt = conn.prepareStatement(sql);
 			
 			stmt.setString(1, (String)value);
-			stmt.setString(2, (String)uid);
+			stmt.setObject(2, uid);
 			
 			int num = stmt.executeUpdate();
 			return num;

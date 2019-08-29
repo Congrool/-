@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import cn.newshome.Dao.ex.CommentDaoException;
+import cn.newshome.Dao.ex.NewsDaoException;
 import cn.newshome.Util.DBUtils;
 
 /**
@@ -20,7 +21,7 @@ import cn.newshome.Util.DBUtils;
  *
  */
 public class CommentDao {
-	public Vector<Vector<Object>> selectByUid(String uid){
+	public Vector<Vector<Object>> selectByUid(String uid) throws NewsDaoException{
 		String sql = "select * from comment_info where uid=?";
 		Vector<Vector<Object>> res = null;
 		ResultSet rs = null;
@@ -53,7 +54,7 @@ public class CommentDao {
 			DBUtils.close(rs);
 		}
 	}
-	public Vector<Vector<Object>> selectByNewsid(String newsid){
+	public Vector<Vector<Object>> selectByNewsid(String newsid)throws NewsDaoException{
 		String sql = "select * from comment_info where news_id=?";
 		Vector<Vector<Object>> res = null;
 		ResultSet rs = null;
@@ -85,7 +86,7 @@ public class CommentDao {
 			DBUtils.close(rs);
 		}
 	}
-	public int deleteByCommentid(String commentid) {
+	public int deleteByCommentid(String commentid)throws NewsDaoException {
 		String sql = "delete from comment_info where comment_id=?;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
