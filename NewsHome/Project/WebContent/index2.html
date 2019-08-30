@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>註冊界面</title>
+<style type="text/css">
+#content{
+width: 600px;
+height: 410px;
+margin-left: 400px;
+background-color: rgb(0,0,0,.3);
+background-image: url();
+border-radius:50px;
+position: absolute;
+}
+
+#regist-form{
+	width:520px;
+	height: 260px;
+	margin-left:30px;
+	box-shadow: 0 0 0 6px rgba(128,128,128,.3);
+}
+
+body{
+	background-image: url(56ab206d3165d.jpg);
+	background-repeat: no-repeat;
+	text-shadow: 5px 5px 5px blue;
+	border-radius:25px;
+	position: absolute;
+}
+
+h1{
+	font-family: kaiti;
+	color: white;
+}
+
+.form{
+	font-family: kaiti;
+	float: center;
+	border-radius:25px;
+}
+.text-group{
+	color: white;
+	margin-top: 10px;
+}
+.button{
+	width: 100px;
+	border: 1px solid yellow;
+	margin:0px auto;
+	margin-left:100px;
+}
+</style>
+</head>
+
+<body>
+	<hr>
+<div id="content">
+		<h1 align="center">新用户的注册</h1>
+	<div class="form">
+		<div class="char">
+			<form id="regist-form" action="regster" method="post">
+				<div class="text-group">
+					<b>用户名：</b> 
+					<input class="userin" type="text" name="username"
+						placeholder="请输入用户名" required="required">
+					</div>
+					<div class="text-group">
+						<b>密　码：</b>
+						<input name="pwd"
+						class="userin" type="password" placeholder="请输入密码" required="required">
+						<br/>
+					</div>
+					<div class="text-group">
+					<label for="email">
+						<b>邮　箱:<b/></label>
+							<input class="userin"
+						name="email" type="email" placeholder="请输入邮箱"> <br/>
+					</div>
+				<div class="text-group">
+					<label for="gender">性　别</label> <input name="gender" type="radio"
+						value="m" id="g_m"><label for="g_m">male</label> <input name="gender" type="radio" value="f"
+						checked>female 
+					</div>
+					<!-- <br/>  -->
+					<div class="text-group">
+					<label for="hob">爱　好：</label> <input
+						type="checkbox" name="hob" value="tv">电视 <input
+						type="checkbox" name="hob" value="game">游戏 <input
+						type="checkbox" name="hob" value="draw">绘画 <input
+						type="checkbox" name="hob" value="pro">摄影 <input
+						type="checkbox" name="hob" value="code" checked>打代码<br/>
+					</div>
+					<div class="text-group">
+					<input class="button" type="submit" value="提交">
+					 <input class="button" type="reset" name="重置">
+					</div>
+				</div>
+			</form>
+		</div>
+</body>
+</html>
